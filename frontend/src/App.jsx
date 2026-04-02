@@ -1,131 +1,47 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from './assets/vite.svg'
-// import heroImg from './assets/hero.png'
-// import './App.css'
+/** This the main/root component
+ * This is the controller of UI
+ * React does: index.html -> main.jsx -> App.jsx -> UI
+ * 
+ */
 
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <section id="center">
-//         <div className="hero">
-//           <img src={heroImg} className="base" width="170" height="179" alt="" />
-//           <img src={reactLogo} className="framework" alt="React logo" />
-//           <img src={viteLogo} className="vite" alt="Vite logo" />
-//         </div>
-//         <div>
-//           <h1>Get started</h1>
-//           <p>
-//             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-//           </p>
-//         </div>
-//         <button
-//           className="counter"
-//           onClick={() => setCount((count) => count + 1)}
-//         >
-//           Count is {count}
-//         </button>
-//       </section>
-
-//       <div className="ticks"></div>
-
-//       <section id="next-steps">
-//         <div id="docs">
-//           <svg className="icon" role="presentation" aria-hidden="true">
-//             <use href="/icons.svg#documentation-icon"></use>
-//           </svg>
-//           <h2>Documentation</h2>
-//           <p>Your questions, answered</p>
-//           <ul>
-//             <li>
-//               <a href="https://vite.dev/" target="_blank">
-//                 <img className="logo" src={viteLogo} alt="" />
-//                 Explore Vite
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://react.dev/" target="_blank">
-//                 <img className="button-icon" src={reactLogo} alt="" />
-//                 Learn more
-//               </a>
-//             </li>
-//           </ul>
-//         </div>
-//         <div id="social">
-//           <svg className="icon" role="presentation" aria-hidden="true">
-//             <use href="/icons.svg#social-icon"></use>
-//           </svg>
-//           <h2>Connect with us</h2>
-//           <p>Join the Vite community</p>
-//           <ul>
-//             <li>
-//               <a href="https://github.com/vitejs/vite" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#github-icon"></use>
-//                 </svg>
-//                 GitHub
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://chat.vite.dev/" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#discord-icon"></use>
-//                 </svg>
-//                 Discord
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://x.com/vite_js" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#x-icon"></use>
-//                 </svg>
-//                 X.com
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://bsky.app/profile/vite.dev" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#bluesky-icon"></use>
-//                 </svg>
-//                 Bluesky
-//               </a>
-//             </li>
-//           </ul>
-//         </div>
-//       </section>
-
-//       <div className="ticks"></div>
-//       <section id="spacer"></section>
-//     </>
-//   )
-// }
-
-/*Above was a default code of Vite*/
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Project from "./pages/Projects";
+import useScroll from "./hooks/useScroll";
+import Stickman from "./components/Stickman";
 
 function App() {
+  const scrollY = useScroll();
+
+  //Defines what appears on screen
+  //Inernally - JSX is converted to DOM (Document Object Model) elements that the browser can render.
   return (
+    /*fixed scroll display at top of page, scrollY is the value from useScroll hook*/
+    //Rendering components: Home, About, Project are rendered in order. Each component can have its own state and logic, but they all contribute to the overall UI of the application.
+    /*Virtual DOM: React uses a virtual DOM to efficiently update the UI. When state changes (like scrollY), React compares the new virtual DOM with the previous one 
+      and only updates the parts of the actual DOM that have changed, improving performance. 
+      A light weight copy of the real DOM, allowing React to optimize updates and rendering.
+      When state changes, React updates the virtual DOM first, then efficiently updates the real DOM based on the differences.
+    */
     <div>
-      <h1>Stickman Portfolio 👤⚔️👤</h1>
+      <h2 style={{position: "fixed", top: 0, color: "white"}}>
+        Scroll: {scrollY}
+      </h2>
+
+      {/* Stickman X */}
+      <Stickman x={100} y={200} label="X" />
+      {/* Stickman Y */}
+      <Stickman x={300} y={200} label="Y" />
+
+      <Home />
+      <About />
+      <Project />
     </div>
   );
 }
 
 export default App;
+
+/**
+ * Flow : Scroll -> Event -> State Update -> Re-render -> UI Update
+ */
